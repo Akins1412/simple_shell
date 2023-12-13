@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * _puts - writes a string to standard output
- * @str: string to write
+ * print_string - Writes a string to the standard output
+ * @str: String to be written
  *
- * Return: number of chars printed or -1 on failure
+ * Return: Number of characters printed or -1 on failure
  */
-ssize_t _puts(char *str)
+ssize_t print_string(char *str)
 {
 	ssize_t num, len;
 
@@ -14,18 +14,19 @@ ssize_t _puts(char *str)
 	len = write(STDOUT_FILENO, str, num);
 	if (len != num)
 	{
-		perror("Fatal Error");
+		perror("Syntax Error");
 		return (-1);
 	}
 	return (len);
 }
 
 /**
- * _strdup - returns pointer to new mem alloc space which contains copy
- * @strtodup: string to be duplicated
- * Return: a pointer to the new duplicated string
+ * duplicate_string - Creates a duplicate of the provided string in a new memory space
+ * @str_to_duplicate: String to be duplicated
+ *
+ * Return: Pointer to the new duplicated string
  */
-char *_strdup(char *strtodup)
+char *duplicate_string(char *str_to_duplicate)
 {
 	char *copy;
 
@@ -45,12 +46,13 @@ char *_strdup(char *strtodup)
 }
 
 /**
- * _strcmpr - compares two strings
- * @strcmp1: first string, of two, to be compared in length
- * @strcmp2: second string, of two, to be compared
- * Return: 0 on success, anything else is a failure
+ * compare_strings - Compares the lengths of two strings
+ * @str1: First string to be compared in length
+ * @str2: Second string to be compared
+ *
+ * Return: 0 on success, any other value indicates a failure
  */
-int _strcmpr(char *strcmp1, char *strcmp2)
+int compare_strings(char *str1, char *str2)
 {
 	int i;
 
@@ -65,12 +67,14 @@ int _strcmpr(char *strcmp1, char *strcmp2)
 }
 
 /**
- * _strcat - concatenates two strings
- * @strc1: first string
- * @strc2: second string
- * Return: pointer
+ * concatenate_strings - Concatenates two strings
+ * @str1: First string
+ * @str2: Second string
+ *
+ * Return: Pointer to the concatenated string
  */
-char *_strcat(char *strc1, char *strc2)
+
+char *concatenate_strings(char *str1, char *str2)
 {
 	char *newstring;
 	unsigned int len1, len2, newlen, i, j;
@@ -105,11 +109,12 @@ char *_strcat(char *strc1, char *strc2)
 }
 
 /**
- * _strlen - returns the length of a string
- * @str: string to be measured
- * Return: length of string
+ * get_string_length - Computes the length of a string
+ * @str: String to be measured
+ *
+ * Return: Length of the string
  */
-unsigned int _strlen(char *str)
+unsigned int get_string_length(char *str)
 {
 	unsigned int len;
 
