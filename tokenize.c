@@ -2,13 +2,13 @@
 
 
 /**
- * tokenize - tokenizes a buffer with a delimiter
- * @buffer: buffer to tokenize
- * @delimiter: delimiter to tokenize along
+ * tokenize_input - Splits a buffer into tokens using a delimiter
+ * @input_buffer: Buffer to tokenize
+ * @delimiter: Delimiter for tokenization
  *
- * Return: pointer to an array of pointers to the tokens
+ * Return: Pointer to an array of pointers to the tokens
  */
-char **tokenize(char *buffer, char *delimiter)
+char **tokenize_input(char *input_buffer, char *delimiter)
 {
 	char **tokens = NULL;
 	size_t i = 0, mcount = 10;
@@ -18,15 +18,15 @@ char **tokenize(char *buffer, char *delimiter)
 	tokens = malloc(sizeof(char *) * mcount);
 	if (tokens == NULL)
 	{
-		perror("Fatal Error");
+		perror("Syntax Error");
 		return (NULL);
 	}
-	while ((tokens[i] = new_strtok(buffer, delimiter)) != NULL)
+	while ((tokens[i] = custom_strtok(buffer, delimiter)) != NULL)
 	{
 		i++;
 		if (i == mcount)
 		{
-			tokens = _realloc(tokens, &mcount);
+			tokens = resize_array(tokens, &mcount);
 			if (tokens == NULL)
 			{
 				perror("Fatal Error");
