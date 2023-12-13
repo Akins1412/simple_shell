@@ -47,11 +47,11 @@ typedef struct builtin command
 char **initialize_env(char **env);
 void release_env(char **env);
 
-ssize_t _puts(char *str);
-char *_strdup(char *strtodup);
-int _strcmpr(char *strcmp1, char *strcmp2);
-char *_strcat(char *strc1, char *strc2);
-unsigned int _strlen(char *str);
+ssize_t print_string(char *str);
+char *duplicate_string(char *str_to_duplicate);
+int compare_strings(char *str1, char *str2);
+char *concatenate_strings(char *str1, char *str2);
+unsigned int get_string_length(char *str);
 
 void (*check_for_builtins(vars_t *vars))(vars_t *vars);
 void new_exit(vars_t *vars);
