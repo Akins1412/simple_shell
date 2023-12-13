@@ -45,7 +45,7 @@ typedef struct builtin command
 } builtin cmd;
 
 char **initialize_env(char **env);
-void free_env(char **env);
+void release_env(char **env);
 
 ssize_t _puts(char *str);
 char *_strdup(char *strtodup);
