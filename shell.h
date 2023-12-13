@@ -53,11 +53,11 @@ int compare_strings(char *str1, char *str2);
 char *concatenate_strings(char *str1, char *str2);
 unsigned int get_string_length(char *str);
 
-void (*check_for_builtins(vars_t *vars))(vars_t *vars);
-void new_exit(vars_t *vars);
-void _env(vars_t *vars);
-void new_setenv(vars_t *vars);
-void new_unsetenv(vars_t *vars);
+void (*identify_builtin(ShellVars *vars))(ShellVars *vars);
+void execute_exit(ShellVars *vars);
+void display_environment(ShellVars *vars);
+void execute_setenv(ShellVars *vars);
+void execute_unsetenv(ShellVars *vars);
 
 char **tokenize(char *buffer, char *delimiter);
 char **_realloc(char **ptr, size_t *size);
