@@ -63,19 +63,10 @@ char **tokenize_input(char *input_buffer, char *delimiter);
 char **resize_array(char **array_ptr, size_t *size);
 char *custom_strtok(char *str, const char *delim);
 
-void check_for_path(vars_t *vars);
-int path_execute(char *command, vars_t *vars);
-char *find_path(char **env);
-int execute_cwd(vars_t *vars);
-int check_for_dir(char *str);
 
 void add_environment_key(ShellVars *vars);
 char **find_environment_key(char **env, char *key);
 char *add_environment_value(char *key, char *value);
 int convert_string_to_int(char *str);
-
-void print_error(vars_t *vars, char *msg);
-void _puts2(char *str);
-char *_uitoa(unsigned int count);
 
 #endif /* _SHELL_H_ */
