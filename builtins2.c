@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * add_key - create a new environment variable
- * @vars: pointer to struct of variables
+ * add_environment_key - Creates a new environment variable
+ * @vars: Pointer to the structure of shell variables
  *
  * Return: void
  */
-void add_key(vars_t *vars)
+void add_environment_key(ShellVars *vars)
 {
 	unsigned int i;
 	char **newenv;
@@ -39,13 +39,13 @@ void add_key(vars_t *vars)
 }
 
 /**
- * find_key - finds an environment variable
- * @env: array of environment variables
- * @key: environment variable to find
+ * find_environment_key - Locates an environment variable
+ * @env: Array of environment variables
+ * @key: Environment variable to find
  *
- * Return: pointer to address of the environment variable
+ * Return: Pointer to the address of the environment variable
  */
-char **find_key(char **env, char *key)
+char **find_environment_key(char **env, char *key)
 {
 	unsigned int i, j, len;
 
@@ -62,13 +62,13 @@ char **find_key(char **env, char *key)
 }
 
 /**
- * add_value - create a new environment variable string
- * @key: variable name
- * @value: variable value
+ * add_environment_value - Creates a new environment variable string
+ * @key: Variable name
+ * @value: Variable value
  *
- * Return: pointer to the new string;
+ * Return: Pointer to the new string
  */
-char *add_value(char *key, char *value)
+char *add_environment_value(char *key, char *value)
 {
 	unsigned int len1, len2, i, j;
 	char *new;
@@ -88,12 +88,12 @@ char *add_value(char *key, char *value)
 }
 
 /**
- * _atoi - converts a string into an integer
- * @str: string to convert
+ * convert_string_to_int - Converts a string into an integer
+ * @str: String to convert
  *
- * Return: the integer value, or -1 if an error occurs
+ * Return: The integer value, or -1 if an error occurs
  */
-int _atoi(char *str)
+int convert_string_to_int(char *str)
 {
 	unsigned int i, digits;
 	int num = 0, num_test;
