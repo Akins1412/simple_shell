@@ -44,7 +44,7 @@ typedef struct builtin command
 	void (*function)(shell vars *);
 } builtin cmd;
 
-char **init_env(char **env);
+char **initialize_env(char **env);
 void free_env(char **env);
 
 ssize_t _puts(char *str);
