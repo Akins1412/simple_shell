@@ -11,40 +11,40 @@
 #include <limits.h>
 #include <signal.h>
 
-
 /**
- * struct variables - variables
- * @av: command line arguments
- * @buffer: buffer of command
- * @env: environment variables
- * @count: count of commands entered
- * @argv: arguments at opening of shell
- * @status: exit status
- * @commands: double pointer to commands
+ * shell variables Structure - Holds shell-related variables
+ * @av: Command line arguments
+ * @buffer: Buffer containing the command
+ * @env: Environment variables
+ * @count: Count of entered commands
+ * @argv: Arguments at the opening of the shell
+ * @exit_status: Exit status of the shell
+ * @commands: Double pointer to commands
  */
-typedef struct variables
+typedef struct shell variables
 {
 	char **av;
 	char *buffer;
 	char **env;
 	size_t count;
 	char **argv;
-	int status;
+	int exit_status;
 	char **commands;
-} vars_t;
+} shell vars;
+
 
 /**
- * struct builtins - structs for the builtin functions
- * @name: name of builtin command
- * @f: function for corresponding builtin
+ * builtin command Structure - Holds information for shell builtin commands
+ * @name: Name of the builtin command
+ * @function: Function pointer to the corresponding builtin function
  */
-typedef struct builtins
+typedef struct builtin command
 {
 	char *name;
-	void (*f)(vars_t *);
-} builtins_t;
+	void (*function)(shell vars *);
+} builtin cmd;
 
-char **make_env(char **env);
+char **init_env(char **env);
 void free_env(char **env);
 
 ssize_t _puts(char *str);
