@@ -59,9 +59,9 @@ void display_environment(ShellVars *vars);
 void execute_setenv(ShellVars *vars);
 void execute_unsetenv(ShellVars *vars);
 
-char **tokenize(char *buffer, char *delimiter);
-char **_realloc(char **ptr, size_t *size);
-char *new_strtok(char *str, const char *delim);
+char **tokenize_input(char *input_buffer, char *delimiter);
+char **resize_array(char **array_ptr, size_t *size);
+char *custom_strtok(char *str, const char *delim);
 
 void check_for_path(vars_t *vars);
 int path_execute(char *command, vars_t *vars);
