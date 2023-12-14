@@ -11,11 +11,11 @@
 char **tokenize_input(char *input_buffer, char *delimit)
 {
 	char **tokens = NULL;
-	size_t i = 0, mcount = 10;
+	size_t i = 0, maxc = 10;
 
 	if (buffer == NULL)
 		return (NULL);
-	tokens = malloc(sizeof(char *) * mcount);
+	tokens = malloc(sizeof(char *) * maxc);
 	if (tokens == NULL)
 	{
 		perror("Syntax Error");
@@ -24,9 +24,9 @@ char **tokenize_input(char *input_buffer, char *delimit)
 	while ((tokens[i] = custom_strtok(buffer, delimit)) != NULL)
 	{
 		i++;
-		if (i == mcount)
+		if (i == maxc)
 		{
-			tokens = resize_array(tokens, &mcount);
+			tokens = resize_array(tokens, &maxc);
 			if (tokens == NULL)
 			{
 				perror("Fatal Error");
