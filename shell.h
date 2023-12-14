@@ -30,7 +30,7 @@ typedef struct shell_variables
 	char **argv;
 	int exit_status;
 	char **commands;
-} shell vars;
+} struct vars;
 
 
 /**
