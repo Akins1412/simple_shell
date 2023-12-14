@@ -54,19 +54,19 @@ char *concatenate_strings(char *str1, char *str2);
 unsigned int get_string_length(char *str);
 
 void (*identify_builtin(shell_vars  * vars))(shell_vars  * vars)
-	void execute_exit(shell_vars  * vars);
-	void display_environment(shell_vars *vars);
-	void execute_setenv(shell_vars *vars);
-	void execute_unsetenv(shell_vars *vars);
+void execute_exit(shell_vars  * vars);
+void display_environment(shell_vars *vars);
+void execute_setenv(shell_vars *vars);
+void execute_unsetenv(shell_vars *vars);
 
-	char **tokenize_input(char *input_buffer, char *delimiter);
-	char **resize_array(char **array_ptr, size_t *size);
-	char *custom_strtok(char *str, const char *delim);
+char **tokenize_input(char *input_buffer, char *delimiter);
+char **resize_array(char **array_ptr, size_t *size);
+char *custom_strtok(char *str, const char *delim);
 
 
-	void add_environment_key(shell_vars *vars);
-	char **find_environment_key(char **env, char *key);
-	char *add_environment_value(char *key, char *value);
-	int convert_string_to_int(char *str);
+void add_environment_key(shell_vars *vars);
+char **find_environment_key(char **env, char *key);
+char *add_environment_value(char *key, char *value);
+int convert_string_to_int(char *str);
 
 #endif /* _SHELL_H_ */
