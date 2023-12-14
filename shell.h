@@ -30,7 +30,7 @@ typedef struct shell_variables
 	char **argv;
 	int exit_status;
 	char **commands;
-} shell_vars;
+} shell_vars_t;
 
 
 /**
@@ -41,8 +41,8 @@ typedef struct shell_variables
 typedef struct builtin
 {
 	char *name;
-	void (*function)(shell_vars *);
-} builtincmd;
+	void (*function)(shell_vars_t *);
+} builtin_t;
 
 char **initialize_env(char **env);
 void release_env(char **env);
