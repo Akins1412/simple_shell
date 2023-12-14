@@ -53,7 +53,7 @@ int compare_strings(char *str1, char *str2);
 char *concatenate_strings(char *str1, char *str2);
 unsigned int get_string_length(char *str);
 
-void (*identify_builtin(shell_vars *vars))(shell_vars *vars)
+void (*identify_builtin(shellvars *))(shellvars *)
 void execute_exit(shell_vars *vars);
 void display_environment(shell_vars *vars);
 void execute_setenv(shell_vars *vars);
