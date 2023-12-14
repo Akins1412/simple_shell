@@ -4,11 +4,11 @@
 /**
  * tokenize_input - Splits a buffer into tokens using a delimiter
  * @input_buffer: Buffer to tokenize
- * @delimiter: Delimiter for tokenization
+ * @delimit: Delimiter for tokenization
  *
  * Return: Pointer to an array of pointers to the tokens
  */
-char **tokenize_input(char *input_buffer, char *delimiter)
+char **tokenize_input(char *input_buffer, char *delimit)
 {
 	char **tokens = NULL;
 	size_t i = 0, mcount = 10;
@@ -21,7 +21,7 @@ char **tokenize_input(char *input_buffer, char *delimiter)
 		perror("Syntax Error");
 		return (NULL);
 	}
-	while ((tokens[i] = custom_strtok(buffer, delimiter)) != NULL)
+	while ((tokens[i] = custom_strtok(buffer, delimit)) != NULL)
 	{
 		i++;
 		if (i == mcount)
