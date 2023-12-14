@@ -42,7 +42,7 @@ typedef struct builtin command
 {
 	char *name;
 	void (*function)(shell_vars *);
-} builtincmd;
+} builtincmd_t;
 
 char **initialize_env(char **env);
 void release_env(char **env);
