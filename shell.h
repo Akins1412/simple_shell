@@ -63,6 +63,9 @@ char **tokenize_input(char *input_buffer, char *delimiter);
 char **resize_array(char **array_ptr, size_t *size);
 char *custom_strtok(char *str, const char *delim);
 
+void display_error(ShellVars *shell_vars, char *message);
+void custom_puts2(char *str);
+char *custom_uitoa(unsigned int count);
 
 void add_environment_key(shell_vars *vars);
 char **find_environment_key(char **env, char *key);
