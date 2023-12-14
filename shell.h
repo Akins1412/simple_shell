@@ -12,7 +12,7 @@
 #include <signal.h>
 
 /**
- * shell variables Structure - Holds shell-related variables
+ * variables Structure - Holds shell-related variables
  * @av: Command line arguments
  * @buffer: Buffer containing the command
  * @env: Environment variables
@@ -21,7 +21,7 @@
  * @exit_status: Exit status of the shell
  * @commands: Double pointer to commands
  */
-typedef struct shell variables
+typedef struct shell_variables
 {
 	char **av;
 	char *buffer;
@@ -30,7 +30,7 @@ typedef struct shell variables
 	char **argv;
 	int exit_status;
 	char **commands;
-} shell vars;
+} struct vars;
 
 
 /**
@@ -42,7 +42,7 @@ typedef struct builtin command
 {
 	char *name;
 	void (*function)(shell vars *);
-} builtin cmd;
+} struct cmd;
 
 char **initialize_env(char **env);
 void release_env(char **env);
@@ -53,18 +53,18 @@ int compare_strings(char *str1, char *str2);
 char *concatenate_strings(char *str1, char *str2);
 unsigned int get_string_length(char *str);
 
-void (*identify_builtin(ShellVars *vars))(ShellVars *vars);
-void execute_exit(ShellVars *vars);
-void display_environment(ShellVars *vars);
-void execute_setenv(ShellVars *vars);
-void execute_unsetenv(ShellVars *vars);
+void (*identify_builtin(shell_vars *vars))(shell_vars *vars);
+void execute_exit(shell_vars *vars);
+void display_environment(shell_ars *vars);
+void execute_setenv(shell_vars *vars);
+void execute_unsetenv(shell_vars *vars);
 
 char **tokenize_input(char *input_buffer, char *delimiter);
 char **resize_array(char **array_ptr, size_t *size);
 char *custom_strtok(char *str, const char *delim);
 
 
-void add_environment_key(ShellVars *vars);
+void add_environment_key(shell_vars *vars);
 char **find_environment_key(char **env, char *key);
 char *add_environment_value(char *key, char *value);
 int convert_string_to_int(char *str);

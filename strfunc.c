@@ -21,7 +21,7 @@ ssize_t print_string(char *str)
 }
 
 /**
- * duplicate_string - Creates a duplicate of the provided string in a new memory space
+ * duplicate_string - Creates a duplicate of the provided string in a new memory
  * @str_to_duplicate: String to be duplicated
  *
  * Return: Pointer to the new duplicated string
