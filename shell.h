@@ -41,7 +41,7 @@ typedef struct shellvariables
 typedef struct builtin command
 {
 	char *name;
-	void (*function)(s vars *);
+	void (*function)(shell_vars *);
 } builtincmd;
 
 char **initialize_env(char **env);
