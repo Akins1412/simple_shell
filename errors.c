@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- * print_error - prints error messages to standard error
- * @vars: pointer to struct of variables
- * @msg: message to print out
+ * display_error - outputs error messages to the standard error stream
+ * @vars: pointer to the variables structure
+ * @msg: message to be displayed
  *
- * Return: void
+ * Returns: void
  */
-void print_error(vars_t *vars, char *msg)
+void display_error(ShellVars *shell_vars, char *message)
 {
 	char *count;
 
@@ -27,12 +27,12 @@ void print_error(vars_t *vars, char *msg)
 }
 
 /**
- * _puts2 - prints a string to standard error
- * @str: string to print
+ * custom_puts2 - outputs a string to the standard error stream
+ * @str: string to be printed
  *
- * Return: void
+ * Returns: void
  */
-void _puts2(char *str)
+void custom_puts2(char *str)
 {
 	ssize_t num, len;
 
@@ -47,12 +47,12 @@ void _puts2(char *str)
 }
 
 /**
- * _uitoa - converts an unsigned int to a string
- * @count: unsigned int to convert
+ * custom_uitoa - converts an unsigned integer to a string
+ * @count: unsigned integer to be converted
  *
- * Return: pointer to the converted string
+ * Returns: pointer to the resulting string
  */
-char *_uitoa(unsigned int count)
+char *custom_uitoa(unsigned int count)
 {
 	char *numstr;
 	unsigned int tmp, digits;
