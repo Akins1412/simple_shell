@@ -9,31 +9,31 @@
 void add_environment_key(shell_vars *vars)
 {
 	unsigned int i;
-	char **newenv;
+	char **recenv;
 
 	for (i = 0; vars->env[i] != NULL; i++)
 		;
-	newenv = malloc(sizeof(char *) * (i + 2));
-	if (newenv == NULL)
+	recenv = malloc(sizeof(char *) * (i + 2));
+	if (recenv == NULL)
 	{
 		display_error(vars, NULL);
 		vars->status = 127;
-		new_exit(vars);
+		custom_exit(vars);
 	}
 	for (i = 0; vars->env[i] != NULL; i++)
-		newenv[i] = vars->env[i];
-	newenv[i] = add_value(vars->av[1], vars->av[2]);
-	if (newenv[i] == NULL)
+		recenv[i] = vars->env[i];
+	recenv[i] = insert_value(vars->av[1], vars->av[2]);
+	if (recenv[i] == NULL)
 	{
 		display_error(vars, NULL);
 		free(vars->buffer);
 		free(vars->commands);
 		free(vars->av);
-		free_env(vars->env);
-		free(newenv);
+		release_environment(vars->env);
+		free(recenv);
 		exit(127);
 	}
-	newenv[i + 1] = NULL;
+	recenv[i + 1] = NULL;
 	free(vars->env);
 	vars->env = newenv;
 }
@@ -47,15 +47,15 @@ void add_environment_key(shell_vars *vars)
  */
 char **find_environment_key(char **env, char *key)
 {
-	unsigned int i, j, len;
+	unsigned int i, j, l;
 
-	len = _strlen(key);
+	l = custom_strlen(key);
 	for (i = 0; env[i] != NULL; i++)
 	{
-		for (j = 0; j < len; j++)
+		for (j = 0; j < l; j++)
 			if (key[j] != env[i][j])
 				break;
-		if (j == len && env[i][j] == '=')
+		if (j == l && env[i][j] == '=')
 			return (&env[i]);
 	}
 	return (NULL);
@@ -70,12 +70,12 @@ char **find_environment_key(char **env, char *key)
  */
 char *add_environment_value(char *key, char *value)
 {
-	unsigned int len1, len2, i, j;
+	unsigned int l1, l2, i, j;
 	char *new;
 
-	len1 = _strlen(key);
-	len2 = _strlen(value);
-	new = malloc(sizeof(char) * (len1 + len2 + 2));
+	l1 = custom_strlen(key);
+	l2 = custom_strlen(value);
+	new = malloc(sizeof(char) * (l1 + l2 + 2));
 	if (new == NULL)
 		return (NULL);
 	for (i = 0; key[i] != '\0'; i++)
@@ -95,24 +95,24 @@ char *add_environment_value(char *key, char *value)
  */
 int convert_string_to_int(char *str)
 {
-	unsigned int i, digits;
-	int num = 0, num_test;
+	unsigned int i, num;
+	int n = 0, n_test;
 
-	num_test = INT_MAX;
-	for (digits = 0; num_test != 0; digits++)
-		num_test /= 10;
-	for (i = 0; str[i] != '\0' && i < digits; i++)
+	n_test = INT_MAX;
+	for (num = 0; n_test != 0; num++)
+		n_test /= 10;
+	for (i = 0; str[i] != '\0' && i < num; i++)
 	{
 		num *= 10;
 		if (str[i] < '0' || str[i] > '9')
 			return (-1);
-		if ((i == digits - 1) && (str[i] - '0' > INT_MAX % 10))
+		if ((i == num - 1) && (str[i] - '0' > INT_MAX % 10))
 			return (-1);
-		num += str[i] - '0';
-		if ((i == digits - 2) && (str[i + 1] != '\0') && (num > INT_MAX / 10))
+		n += str[i] - '0';
+		if ((i == num - 2) && (str[i + 1] != '\0') && (n > INT_MAX / 10))
 			return (-1);
 	}
-	if (i > digits)
+	if (i > num)
 		return (-1);
-	return (num);
+	return (n);
 }
