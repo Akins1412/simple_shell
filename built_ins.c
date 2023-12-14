@@ -5,10 +5,10 @@
  * @vars: Shell variables
  * Return: Pointer to the corresponding function or NULL
  */
-void (*identify_builtin(shell_vars  * vars))(shell_vars  * vars)
+void (*identify_builtin(shell_vars_t  * vars))(shell_vars_t  * vars)
 {
 	unsigned int i;
-	builtins_t check[] = {
+	builtin_t find[] = {
 		{"exit", new_exit},
 		{"env", _env},
 		{"setenv", new_setenv},
@@ -16,14 +16,14 @@ void (*identify_builtin(shell_vars  * vars))(shell_vars  * vars)
 		{NULL, NULL}
 	};
 
-	for (i = 0; check[i].f != NULL; i++)
+	for (i = 0; find[i].f != NULL; i++)
 	{
-		if (_strcmpr(vars->av[0], check[i].name) == 0)
+		if (custom_strdup(vars->av[0], find[i].name) == 0)
 			break;
 	}
-	if (check[i].f != NULL)
-		check[i].f(vars);
-	return (check[i].f);
+	if (find[i].f != NULL)
+		find[i].f(vars);
+	return (find[i].f);
 }
 
 /**
@@ -32,30 +32,30 @@ void (*identify_builtin(shell_vars  * vars))(shell_vars  * vars)
  *
  * Return: void
  */
-void execute_exit(shell_vars *vars)
+void execute_exit(shell_vars_t *vars)
 {
-	int status;
+	int stat;
 
-	if (_strcmpr(vars->av[0], "exit") == 0 && vars->av[1] != NULL)
+	if (custom_strdup(vars->av[0], "exit") == 0 && vars->av[1] != NULL)
 	{
-		status = _atoi(vars->av[1]);
-		if (status == -1)
+		stat = _atoi(vars->av[1]);
+		if (stat == -1)
 		{
-			vars->status = 2;
-			print_error(vars, ": Illegal number: ");
-			_puts2(vars->av[1]);
-			_puts2("\n");
+			vars->stat = 2;
+			display_error(vars, ": Illegal number: ");
+			custom_puts2(vars->av[1]);
+			custom_puts2("\n");
 			free(vars->commands);
 			vars->commands = NULL;
 			return;
 		}
-		vars->status = status;
+		vars->stat = stat;
 	}
 	free(vars->buffer);
 	free(vars->av);
 	free(vars->commands);
-	free_env(vars->env);
-	exit(vars->status);
+	release_env(vars->env);
+	exit(vars->stat);
 }
 
 /**
@@ -64,14 +64,14 @@ void execute_exit(shell_vars *vars)
  *
  * Return: void
  */
-void display_environment(shell_vars *vars)
+void display_environment(shell_vars_t *vars)
 {
 	unsigned int i;
 
 	for (i = 0; vars->env[i]; i++)
 	{
-		_puts(vars->env[i]);
-		_puts("\n");
+		custom_puts(vars->env[i]);
+		custom_puts("\n");
 	}
 	vars->status = 0;
 }
@@ -82,34 +82,34 @@ void display_environment(shell_vars *vars)
  *
  * Return: void
  */
-void execute_setenv(shell_vars *vars)
+void execute_setenv(shell_vars_t *vars)
 {
-	char **key;
+	char **ke;
 	char *var;
 
 	if (vars->av[1] == NULL || vars->av[2] == NULL)
 	{
-		print_error(vars, ": Incorrect number of arguments\n");
+		display_error(vars, ": Incorrect number of arguments\n");
 		vars->status = 2;
 		return;
 	}
-	key = find_key(vars->env, vars->av[1]);
-	if (key == NULL)
-		add_key(vars);
+	ke = find_environment_key(vars->env, vars->av[1]);
+	if (ke == NULL)
+		insert_key(vars);
 	else
 	{
-		var = add_value(vars->av[1], vars->av[2]);
+		var = insert_key(vars->av[1], vars->av[2]);
 		if (var == NULL)
 		{
-			print_error(vars, NULL);
+			display_error(vars, NULL);
 			free(vars->buffer);
 			free(vars->commands);
 			free(vars->av);
 			free_env(vars->env);
 			exit(127);
 		}
-		free(*key);
-		*key = var;
+		free(*ke);
+		*ke = var;
 	}
 	vars->status = 0;
 }
@@ -120,40 +120,40 @@ void execute_setenv(shell_vars *vars)
  *
  * Return: void
  */
-void execute_unsetenv(shell_vars *vars)
+void execute_unsetenv(shell_vars_t *vars)
 {
-	char **key, **newenv;
+	char **ke, **recenv;
 
 	unsigned int i, j;
 
 	if (vars->av[1] == NULL)
 	{
-		print_error(vars, ": Incorrect number of arguments\n");
+		display_error(vars, ": Incorrect number of arguments\n");
 		vars->status = 2;
 		return;
 	}
-	key = find_key(vars->env, vars->av[1]);
-	if (key == NULL)
+	ke = find_environment_key(vars->env, vars->av[1]);
+	if (ke == NULL)
 	{
-		print_error(vars, ": No variable to unset");
+		display_error(vars, ": No variable to unset");
 		return;
 	}
 	for (i = 0; vars->env[i] != NULL; i++)
 		;
-	newenv = malloc(sizeof(char *) * i);
-	if (newenv == NULL)
+	recenv = malloc(sizeof(char *) * i);
+	if (recenv == NULL)
 	{
-		print_error(vars, NULL);
+		display_error(vars, NULL);
 		vars->status = 127;
-		new_exit(vars);
+		exiecute_exit(vars);
 	}
-	for (i = 0; vars->env[i] != *key; i++)
-		newenv[i] = vars->env[i];
+	for (i = 0; vars->env[i] != *ke; i++)
+		recenv[i] = vars->env[i];
 	for (j = i + 1; vars->env[j] != NULL; j++, i++)
 		newenv[i] = vars->env[j];
-	newenv[i] = NULL;
-	free(*key);
+	recenv[i] = NULL;
+	free(*ke);
 	free(vars->env);
-	vars->env = newenv;
+	vars->env = recenv;
 	vars->status = 0;
 }
