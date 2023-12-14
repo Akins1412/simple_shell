@@ -6,7 +6,7 @@
  *
  * Return: void
  */
-void add_environment_key(ShellVars *vars)
+void add_environment_key(shellVars *vars)
 {
 	unsigned int i;
 	char **newenv;
