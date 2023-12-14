@@ -8,21 +8,21 @@
  */
 char **init_env(char **env)
 {
-	char **newenv = NULL;
+	char **recenv = NULL;
 	size_t i;
 
 	for (i = 0; env[i] != NULL; i++)
 		;
-	newenv = malloc(sizeof(char *) * (i + 1));
-	if (newenv == NULL)
+	recenv = malloc(sizeof(char *) * (i + 1));
+	if (recenv == NULL)
 	{
 		perror("Syntax Error");
 		exit(1);
 	}
 	for (i = 0; env[i] != NULL; i++)
-		newenv[i] = _strdup(env[i]);
-	newenv[i] = NULL;
-	return (newenv);
+		recenv[i] = _strdup(env[i]);
+	recenv[i] = NULL;
+	return (recenv);
 }
 
 /**
@@ -36,7 +36,7 @@ void release_env(char **env)
 {
 	unsigned int j;
 
-	for (j = 0; env[i] != NULL; i++)
+	for (j = 0; env[j] != NULL; j++)
 		free(env[j]);
 	free(env);
 }
