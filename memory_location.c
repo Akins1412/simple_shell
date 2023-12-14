@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- * _realloc - reallocates a pointer to double the space
+ * custom_reallocate - doubles the size of a dynamically allocated array
  * @ptr: pointer to the old array
- * @size: pointer to number of elements in the old array
+ * @size: pointer to the number of elements in the old array
  *
- * Return: pointer to the new array
+ * Returns: pointer to the newly allocated array
  */
-char **_realloc(char **ptr, size_t *size)
+char **custom_reallocate(char **ptr, size_t *size)
 {
 	char **new;
 	size_t i;
