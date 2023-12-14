@@ -7,20 +7,20 @@
  *
  * Returns: void
  */
-void display_error(ShellVars *shell_vars, char *message)
+void display_error(shell_vars_t *vars, char *message)
 {
 	char *count;
 
-	_puts2(vars->argv[0]);
-	_puts2(": ");
+	custom_puts2(vars->argv[0]);
+	custom_puts2(": ");
 	count = _uitoa(vars->count);
-	_puts2(count);
+	custom_puts2(count);
 	free(count);
-	_puts2(": ");
-	_puts2(vars->av[0]);
-	if (msg)
+	custom_puts2(": ");
+	custom_puts2(vars->av[0]);
+	if (message)
 	{
-		_puts2(msg);
+		custom_puts2(message);
 	}
 	else
 		perror("");
@@ -34,11 +34,11 @@ void display_error(ShellVars *shell_vars, char *message)
  */
 void custom_puts2(char *str)
 {
-	ssize_t num, len;
+	ssize_t n, l;
 
-	num = _strlen(str);
-	len = write(STDERR_FILENO, str, num);
-	if (len != num)
+	n = _strlen(str);
+	l = write(STDERR_FILENO, str, n);
+	if (l != n)
 	{
 		perror("Fatal Error");
 		exit(1);
@@ -54,23 +54,23 @@ void custom_puts2(char *str)
  */
 char *custom_uitoa(unsigned int count)
 {
-	char *numstr;
-	unsigned int tmp, digits;
+	char *nstr;
+	unsigned int temp, num;
 
-	tmp = count;
-	for (digits = 0; tmp != 0; digits++)
-		tmp /= 10;
-	numstr = malloc(sizeof(char) * (digits + 1));
-	if (numstr == NULL)
+	temp = count;
+	for (num = 0; tmp != 0; num++)
+		temp /= 10;
+	nstr = malloc(sizeof(char) * (num + 1));
+	if (nstr == NULL)
 	{
 		perror("Fatal Error1");
 		exit(127);
 	}
-	numstr[digits] = '\0';
-	for (--digits; count; --digits)
+	nstr[num] = '\0';
+	for (--num; count; --num)
 	{
-		numstr[digits] = (count % 10) + '0';
+		nstr[num] = (count % 10) + '0';
 		count /= 10;
 	}
-	return (numstr);
+	return (nstr);
 }
