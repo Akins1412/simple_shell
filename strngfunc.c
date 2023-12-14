@@ -8,16 +8,16 @@
  */
 ssize_t print_string(char *str)
 {
-	ssize_t num, len;
+	ssize_t n, l;
 
-	num = _strlen(str);
-	len = write(STDOUT_FILENO, str, num);
-	if (len != num)
+	n = _strlen(str);
+	l = write(STDOUT_FILENO, str, n);
+	if (l != n)
 	{
 		perror("Syntax Error");
 		return (-1);
 	}
-	return (len);
+	return (l);
 }
 
 /**
@@ -29,21 +29,21 @@ ssize_t print_string(char *str)
  */
 char *duplicate_string(char *str_to_duplicate)
 {
-	char *copy;
+	char *ct;
 
-	int len, i;
+	int l, i;
 
 	if (strtodup == 0)
 		return (NULL);
 
-	for (len = 0; strtodup[len]; len++)
+	for (l = 0; strtodup[l]; l++)
 		;
-	copy = malloc((len + 1) * sizeof(char));
+	ct = malloc((l + 1) * sizeof(char));
 
-	for (i = 0; i <= len; i++)
-		copy[i] = strtodup[i];
+	for (i = 0; i <= l; i++)
+		ct[i] = strtodup[i];
 
-	return (copy);
+	return (ct);
 }
 
 /**
@@ -77,36 +77,36 @@ int compare_strings(char *str1, char *str2)
 
 char *concatenate_strings(char *str1, char *str2)
 {
-	char *newstring;
-	unsigned int len1, len2, newlen, i, j;
+	char *news;
+	unsigned int l1, l2, newl, i, j;
 
-	len1 = 0;
-	len2 = 0;
+	l1 = 0;
+	l2 = 0;
 	if (strc1 == NULL)
-		len1 = 0;
+		l1 = 0;
 	else
 	{
-		for (len1 = 0; strc1[len1]; len1++)
+		for (l1 = 0; strc1[l1]; l1++)
 			;
 	}
 	if (strc2 == NULL)
-		len2 = 0;
+		l2 = 0;
 	else
 	{
-		for (len2 = 0; strc2[len2]; len2++)
+		for (l2 = 0; strc2[l2]; l2++)
 			;
 	}
-	newlen = len1 + len2 + 2;
-	newstring = malloc(newlen * sizeof(char));
-	if (newstring == NULL)
+	newl = l1 + l2 + 2;
+	news = malloc(newl * sizeof(char));
+	if (news == NULL)
 		return (NULL);
-	for (i = 0; i < len1; i++)
-		newstring[i] = strc1[i];
-	newstring[i] = '/';
-	for (j = 0; j < len2; j++)
-		newstring[i + 1 + j] = strc2[j];
-	newstring[len1 + len2 + 1] = '\0';
-	return (newstring);
+	for (i = 0; i < l1; i++)
+		news[i] = strc1[i];
+	news[i] = '/';
+	for (j = 0; j < l2; j++)
+		news[i + 1 + j] = strc2[j];
+	news[l1 + l2 + 1] = '\0';
+	return (news);
 }
 
 /**
@@ -117,11 +117,11 @@ char *concatenate_strings(char *str1, char *str2)
  */
 unsigned int get_string_length(char *str)
 {
-	unsigned int len;
+	unsigned int l;
 
-	len = 0;
+	l = 0;
 
-	for (len = 0; str[len]; len++)
+	for (l = 0; str[l]; l++)
 		;
-	return (len);
+	return (l);
 }
