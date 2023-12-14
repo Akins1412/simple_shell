@@ -16,7 +16,7 @@ void add_environment_key(shell_vars *vars)
 	newenv = malloc(sizeof(char *) * (i + 2));
 	if (newenv == NULL)
 	{
-		print_error(vars, NULL);
+		display_error(vars, NULL);
 		vars->status = 127;
 		new_exit(vars);
 	}
@@ -25,7 +25,7 @@ void add_environment_key(shell_vars *vars)
 	newenv[i] = add_value(vars->av[1], vars->av[2]);
 	if (newenv[i] == NULL)
 	{
-		print_error(vars, NULL);
+		display_error(vars, NULL);
 		free(vars->buffer);
 		free(vars->commands);
 		free(vars->av);
