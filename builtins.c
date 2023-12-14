@@ -5,7 +5,7 @@
  * @vars: Shell variables
  * Return: Pointer to the corresponding function or NULL
  */
-void (identify_builtin(shellvars *vars))(shellvars *vars)
+void (*identify_builtin(shellvars *vars))(shellvars *vars)
 {
 	unsigned int i;
 	builtins_t check[] = {
