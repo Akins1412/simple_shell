@@ -32,7 +32,7 @@ void (*identify_builtin(shell_vars *vars))(shell_vars *vars)
  *
  * Return: void
  */
-void execute_exit(ShellVars *vars)
+void execute_exit(shellvars *vars)
 {
 	int status;
 
@@ -64,7 +64,7 @@ void execute_exit(ShellVars *vars)
  *
  * Return: void
  */
-void display_environment(ShellVars *vars)
+void display_environment(shellvars *vars)
 {
 	unsigned int i;
 
@@ -82,7 +82,7 @@ void display_environment(ShellVars *vars)
  *
  * Return: void
  */
-void execute_setenv(ShellVars *vars)
+void execute_setenv(shellvars *vars)
 {
 	char **key;
 	char *var;
