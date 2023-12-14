@@ -12,7 +12,7 @@
 #include <signal.h>
 
 /**
- * variables Structure - Holds shell-related variables
+ * shell variables Structure - Holds shell-related variables
  * @av: Command line arguments
  * @buffer: Buffer containing the command
  * @env: Environment variables
@@ -21,7 +21,7 @@
  * @exit_status: Exit status of the shell
  * @commands: Double pointer to commands
  */
-typedef struct shell_variables
+typedef struct shellvariables
 {
 	char **av;
 	char *buffer;
@@ -30,7 +30,7 @@ typedef struct shell_variables
 	char **argv;
 	int exit_status;
 	char **commands;
-} struct vars;
+} shell_vars_t;
 
 
 /**
@@ -41,8 +41,8 @@ typedef struct shell_variables
 typedef struct builtin command
 {
 	char *name;
-	void (*function)(shell vars *);
-} struct cmd;
+	void (*function)(s vars *);
+} builtincmd;
 
 char **initialize_env(char **env);
 void release_env(char **env);
