@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- * check_match - checks if a character matches any in a string
+ * hasMatch - checks if a character matches any in a string
  * @c: character to check
  * @str: string to check
  *
- * Return: 1 if match, 0 if not
+ * Return: 1 if there's a match, 0 if not
  */
-unsigned int check_match(char c, const char *string)
+unsigned int hasMatch(char c, const char *str)
 {
 	unsigned int i;
 
@@ -20,13 +20,13 @@ unsigned int check_match(char c, const char *string)
 }
 
 /**
- * new_strtok - custom strtok
+ * custom_strtok - custom strtok
  * @str: string to tokenize
  * @delim: delimiter to tokenize against
  *
  * Return: pointer to the next token or NULL
  */
-char *new_strtok(char *str, const char *delimit)
+char *custom_strtok(char *str, const char *delimit)
 {
 	static char *tokbegin;
 	static char *tokenxt;
@@ -39,7 +39,7 @@ char *new_strtok(char *str, const char *delimit)
 		return (NULL);
 	for (i = 0; tokenxt[i] != '\0'; i++)
 	{
-		if (check_match(tokenxt[i], delimit) == 0)
+		if (hasMatch(tokenxt[i], delimit) == 0)
 			break;
 	}
 	if (tokenxt[i] == '\0' || tokenxt[i] == '#')
@@ -51,7 +51,7 @@ char *new_strtok(char *str, const char *delimit)
 	next_token = token_start;
 	for (i = 0; tokenxt[i] != '\0'; i++)
 	{
-		if (check_match(tokenxt[i], delimit) == 1)
+		if (hasMatch(tokenxt[i], delimit) == 1)
 			break;
 	}
 	if (tokenxt[i] == '\0')
