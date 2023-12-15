@@ -62,6 +62,7 @@ void execute_unsetenv(shell_vars *vars);
 char **tokenize_input(char *input_buffer, char *delimiter);
 char **custom_reallocate(char **point, size_t *size);
 char *custom_strtok(char *str, const char *delim);
+int doesCharacterMatchString(char c, char *string);
 
 void display_error(shell_vars *shell_vars, char *message);
 void custom_puts2(char *str);
