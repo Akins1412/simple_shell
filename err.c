@@ -3,7 +3,7 @@
 /**
  * display_error - outputs error messages to the standard error stream
  * @vars: pointer to the variables structure
- * @msg: message to be displayed
+ * @message: message to be displayed
  *
  * Returns: void
  */
