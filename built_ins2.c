@@ -6,7 +6,7 @@
  *
  * Return: void
  */
-void add_environment_key(shell_vars *vars)
+void add_environment_key(shell_vars_t *vars)
 {
 	unsigned int i;
 	char **recenv;
@@ -17,25 +17,25 @@ void add_environment_key(shell_vars *vars)
 	if (recenv == NULL)
 	{
 		display_error(vars, NULL);
-		vars->status = 127;
-		custom_exit(vars);
+		vars->exit_status = 127;
+		exiecute_exit(vars);
 	}
 	for (i = 0; vars->env[i] != NULL; i++)
 		recenv[i] = vars->env[i];
-	recenv[i] = insert_value(vars->av[1], vars->av[2]);
+	recenv[i] = add_environment_value(vars->av[1], vars->av[2]);
 	if (recenv[i] == NULL)
 	{
 		display_error(vars, NULL);
 		free(vars->buffer);
 		free(vars->commands);
 		free(vars->av);
-		release_environment(vars->env);
+		release_env(vars->env);
 		free(recenv);
 		exit(127);
 	}
 	recenv[i + 1] = NULL;
 	free(vars->env);
-	vars->env = newenv;
+	vars->env = recenv;
 }
 
 /**
@@ -49,7 +49,7 @@ char **find_environment_key(char **env, char *key)
 {
 	unsigned int i, j, l;
 
-	l = custom_strlen(key);
+	l = get_string_length(key);
 	for (i = 0; env[i] != NULL; i++)
 	{
 		for (j = 0; j < l; j++)
@@ -73,8 +73,8 @@ char *add_environment_value(char *key, char *value)
 	unsigned int l1, l2, i, j;
 	char *new;
 
-	l1 = custom_strlen(key);
-	l2 = custom_strlen(value);
+	l1 = get_string_length(key);
+	l2 = get_string_length(value);
 	new = malloc(sizeof(char) * (l1 + l2 + 2));
 	if (new == NULL)
 		return (NULL);

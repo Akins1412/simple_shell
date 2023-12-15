@@ -13,7 +13,7 @@ char **tokenize_input(char *input_buffer, char *delimit)
 	char **tokens = NULL;
 	size_t i = 0, maxc = 10;
 
-	if (buffer == NULL)
+	if (input_buffer == NULL)
 		return (NULL);
 	tokens = malloc(sizeof(char *) * maxc);
 	if (tokens == NULL)
@@ -21,19 +21,19 @@ char **tokenize_input(char *input_buffer, char *delimit)
 		perror("Syntax Error");
 		return (NULL);
 	}
-	while ((tokens[i] = custom_strtok(buffer, delimit)) != NULL)
+	while ((tokens[i] = custom_strtok(input_buffer, delimit)) != NULL)
 	{
 		i++;
 		if (i == maxc)
 		{
-			tokens = resize_array(tokens, &maxc);
+			tokens = custom_reallocate(tokens, &maxc);
 			if (tokens == NULL)
 			{
 				perror("Fatal Error");
 				return (NULL);
 			}
 		}
-		buffer = NULL;
+		input_buffer = NULL;
 	}
 	return (tokens);
 }

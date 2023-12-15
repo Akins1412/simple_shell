@@ -5,25 +5,25 @@
  * @vars: Shell variables
  * Return: Pointer to the corresponding function or NULL
  */
-void (*identify_builtin(shell_vars_t  * vars))(shell_vars_t  * vars)
+void (*identify_builtin(shell_vars_t  *vars))(shell_vars_t  *vars)
 {
 	unsigned int i;
 	builtin_t find[] = {
-		{"exit", new_exit},
-		{"env", _env},
-		{"setenv", new_setenv},
-		{"unsetenv", new_unsetenv},
+		{"exit", exiecute_exit},
+		{"env", display_environment},
+		{"setenv", execute_setenv},
+		{"unsetenv", execute_unsetenv},
 		{NULL, NULL}
 	};
 
-	for (i = 0; find[i].f != NULL; i++)
+	for (i = 0; find[i].function != NULL; i++)
 	{
-		if (custom_strdup(vars->av[0], find[i].name) == 0)
+		if (compare_strings(vars->av[0], find[i].name) == 0)
 			break;
 	}
-	if (find[i].f != NULL)
-		find[i].f(vars);
-	return (find[i].f);
+	if (find[i].function != NULL)
+		find[i].function(vars);
+	return (find[i].function);
 }
 
 /**
@@ -32,16 +32,16 @@ void (*identify_builtin(shell_vars_t  * vars))(shell_vars_t  * vars)
  *
  * Return: void
  */
-void execute_exit(shell_vars_t *vars)
+void exiecute_exit(shell_vars_t  *vars)
 {
 	int stat;
 
-	if (custom_strdup(vars->av[0], "exit") == 0 && vars->av[1] != NULL)
+	if (compare_strings(vars->av[0], "exit") == 0 && vars->av[1] != NULL)
 	{
-		stat = _atoi(vars->av[1]);
+		stat = convert_string_to_int(vars->av[1]);
 		if (stat == -1)
 		{
-			vars->stat = 2;
+			vars->exit_status = 2;
 			display_error(vars, ": Illegal number: ");
 			custom_puts2(vars->av[1]);
 			custom_puts2("\n");
@@ -49,13 +49,13 @@ void execute_exit(shell_vars_t *vars)
 			vars->commands = NULL;
 			return;
 		}
-		vars->stat = stat;
+		vars->exit_status = stat;
 	}
 	free(vars->buffer);
 	free(vars->av);
 	free(vars->commands);
 	release_env(vars->env);
-	exit(vars->stat);
+	exit(vars->exit_status);
 }
 
 /**
@@ -70,10 +70,10 @@ void display_environment(shell_vars_t *vars)
 
 	for (i = 0; vars->env[i]; i++)
 	{
-		custom_puts(vars->env[i]);
-		custom_puts("\n");
+		print_string(vars->env[i]);
+		print_string("\n");
 	}
-	vars->status = 0;
+	vars->exit_status = 0;
 }
 
 /**
@@ -90,28 +90,28 @@ void execute_setenv(shell_vars_t *vars)
 	if (vars->av[1] == NULL || vars->av[2] == NULL)
 	{
 		display_error(vars, ": Incorrect number of arguments\n");
-		vars->status = 2;
+		vars->exit_status = 2;
 		return;
 	}
 	ke = find_environment_key(vars->env, vars->av[1]);
 	if (ke == NULL)
-		insert_key(vars);
+		add_environment_key(vars);
 	else
 	{
-		var = insert_key(vars->av[1], vars->av[2]);
+		var = add_environment_value(vars->av[1], vars->av[2]);
 		if (var == NULL)
 		{
 			display_error(vars, NULL);
 			free(vars->buffer);
 			free(vars->commands);
 			free(vars->av);
-			free_env(vars->env);
+			release_env(vars->env);
 			exit(127);
 		}
 		free(*ke);
 		*ke = var;
 	}
-	vars->status = 0;
+	vars->exit_status = 0;
 }
 
 /**
@@ -129,7 +129,7 @@ void execute_unsetenv(shell_vars_t *vars)
 	if (vars->av[1] == NULL)
 	{
 		display_error(vars, ": Incorrect number of arguments\n");
-		vars->status = 2;
+		vars->exit_status = 2;
 		return;
 	}
 	ke = find_environment_key(vars->env, vars->av[1]);
@@ -144,16 +144,16 @@ void execute_unsetenv(shell_vars_t *vars)
 	if (recenv == NULL)
 	{
 		display_error(vars, NULL);
-		vars->status = 127;
+		vars->exit_status = 127;
 		exiecute_exit(vars);
 	}
 	for (i = 0; vars->env[i] != *ke; i++)
 		recenv[i] = vars->env[i];
 	for (j = i + 1; vars->env[j] != NULL; j++, i++)
-		newenv[i] = vars->env[j];
+		recenv[i] = vars->env[j];
 	recenv[i] = NULL;
 	free(*ke);
 	free(vars->env);
 	vars->env = recenv;
-	vars->status = 0;
+	vars->exit_status = 0;
 }

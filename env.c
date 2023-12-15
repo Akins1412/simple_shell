@@ -20,7 +20,7 @@ char **init_env(char **env)
 		exit(1);
 	}
 	for (i = 0; env[i] != NULL; i++)
-		recenv[i] = _strdup(env[i]);
+		recenv[i] = duplicate_string(env[i]);
 	recenv[i] = NULL;
 	return (recenv);
 }

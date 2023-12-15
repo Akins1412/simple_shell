@@ -53,21 +53,27 @@ int compare_strings(char *str1, char *str2);
 char *concatenate_strings(char *str1, char *str2);
 unsigned int get_string_length(char *str);
 
-void (*identify_builtin(shell_vars  *vars))(shell_vars  *vars);
-void exiecute_exit(shell_vars  *vars);
-void display_environment(shell_vars *vars);
-void execute_setenv(shell_vars *vars);
-void execute_unsetenv(shell_vars *vars);
+void (*identify_builtin(shell_vars_t  *vars))(shell_vars_t  *vars);
+void exiecute_exit(shell_vars_t  *vars);
+void display_environment(shell_vars_t *vars);
+void execute_setenv(shell_vars_t *vars);
+void execute_unsetenv(shell_vars_t *vars);
 
-char **tokenize_input(char *input_buffer, char *delimiter);
+char **tokenize_input(char *input_buffer, char *delimit);
 char **custom_reallocate(char **point, size_t *size);
 char *custom_strtok(char *str, const char *delim);
 
-void display_error(shell_vars *shell_vars, char *message);
+void checkPath(shell_vars_t *vars);
+int executePath(char *command, shell_vars_t *vars);
+char *findPath(char **env);
+int executeCwd(shell_vars_t *vars);
+int checkForDirectory(char *str);
+
+void display_error(shell_vars_t *vars, char *message);
 void custom_puts2(char *str);
 char *custom_uitoa(unsigned int count);
 
-void add_environment_key(shell_vars *vars);
+void add_environment_key(shell_vars_t *vars);
 char **find_environment_key(char **env, char *key);
 char *add_environment_value(char *key, char *value);
 int convert_string_to_int(char *str);

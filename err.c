@@ -13,7 +13,7 @@ void display_error(shell_vars_t *vars, char *message)
 
 	custom_puts2(vars->argv[0]);
 	custom_puts2(": ");
-	count = _uitoa(vars->count);
+	count = custom_uitoa(vars->count);
 	custom_puts2(count);
 	free(count);
 	custom_puts2(": ");
@@ -36,7 +36,7 @@ void custom_puts2(char *str)
 {
 	ssize_t n, l;
 
-	n = _strlen(str);
+	n = get_string_length(str);
 	l = write(STDERR_FILENO, str, n);
 	if (l != n)
 	{
@@ -58,7 +58,7 @@ char *custom_uitoa(unsigned int count)
 	unsigned int temp, num;
 
 	temp = count;
-	for (num = 0; tmp != 0; num++)
+	for (num = 0; temp != 0; num++)
 		temp /= 10;
 	nstr = malloc(sizeof(char) * (num + 1));
 	if (nstr == NULL)

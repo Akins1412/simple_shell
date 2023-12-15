@@ -12,10 +12,10 @@ unsigned int signal_flag;
 static void signal_handler(int xxy)
 {
 	(void) xxy;
-	if (sig_flag == 0)
-		custom_puts("\n$ ");
+	if (signal_flag == 0)
+		print_string("\n$ ");
 	else
-		custom_puts("\n");
+		print_string("\n");
 }
 
 /**
@@ -33,12 +33,12 @@ int main(int argc __attribute__((unused)), char **argv, char **environment)
 	shell_vars_t vars = {NULL, NULL, NULL, 0, NULL, 0, NULL};
 
 	vars.argv = argv;
-	vars.env = create_environment(environment);
+	vars.env = initialize_env(environment);
 	signal(SIGINT, signal_handler);
 	if (!isatty(STDIN_FILENO))
 		pipe_present = 1;
 	if (pipe_present == 0)
-		custom_puts("$ ");
+		print_string("$ ");
 	signal_flag = 0;
 	while (getline(&(vars.buffer), &buffer, stdin) != -1)
 	{
@@ -50,20 +50,20 @@ int main(int argc __attribute__((unused)), char **argv, char **environment)
 			vars.av = tokenize_input(vars.commands[i], "\n \t\r");
 			if (vars.av && vars.av[0])
 				if (identify_builtin(&vars) == NULL)
-					search_in_path(&vars);
+					checkPath(&vars);
 			free(vars.av);
 		}
 		free(vars.buffer);
 		free(vars.commands);
 		signal_flag = 0;
 		if (pipe_present == 0)
-			custom_puts("$ ");
+			print_string("$ ");
 		vars.buffer = NULL;
 	}
 	if (pipe_present == 0)
-		custom_puts("\n");
-	release_environment(vars.env);
+		print_string("\n");
+	release_env(vars.env);
 	free(vars.buffer);
-	exit(vars.status);
+	exit(vars.exit_status);
 }
 
