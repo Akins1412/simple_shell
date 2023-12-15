@@ -22,7 +22,7 @@ int executePath(char *command, shell_vars_t *vars)
 		}
 		else
 		{
-			wait(&vars->ext_status);
+			wait(&vars->exit_status);
 			if (WIFEXITED(vars->exit_status))
 				vars->exit_status = WEXITSTATUS(vars->exit_status);
 			else if (WIFSIGNALED(vars->exit_status) && WTERMSIG(vars->exit_status) == SIGINT)

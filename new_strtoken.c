@@ -3,11 +3,11 @@
 /**
  * hasMatch - checks if a character matches any in a string
  * @c: character to check
- * @str: string to check
+ * @string: string to check
  *
  * Return: 1 if there's a match, 0 if not
  */
-unsigned int hasMatch(char c, const char *str)
+unsigned int hasMatch(char c, const char *string)
 {
 	unsigned int i;
 
@@ -22,7 +22,7 @@ unsigned int hasMatch(char c, const char *str)
 /**
  * custom_strtok - custom strtok
  * @str: string to tokenize
- * @delim: delimiter to tokenize against
+ * @delimit: delimiter to tokenize against
  *
  * Return: pointer to the next token or NULL
  */
@@ -48,7 +48,7 @@ char *custom_strtok(char *str, const char *delimit)
 		return (NULL);
 	}
 	tokbegin = tokenxt + i;
-	next_token = token_start;
+	tokenxt = tokbegin;
 	for (i = 0; tokenxt[i] != '\0'; i++)
 	{
 		if (hasMatch(tokenxt[i], delimit) == 1)

@@ -44,7 +44,7 @@ typedef struct builtin
 	void (*function)(shell_vars_t *);
 } builtin_t;
 
-char **initialize_env(char **env);
+char **init_env(char **env);
 void release_env(char **env);
 
 ssize_t print_string(char *str);

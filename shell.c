@@ -33,7 +33,7 @@ int main(int argc __attribute__((unused)), char **argv, char **environment)
 	shell_vars_t vars = {NULL, NULL, NULL, 0, NULL, 0, NULL};
 
 	vars.argv = argv;
-	vars.env = initialize_env(environment);
+	vars.env = init_env(environment);
 	signal(SIGINT, signal_handler);
 	if (!isatty(STDIN_FILENO))
 		pipe_present = 1;
