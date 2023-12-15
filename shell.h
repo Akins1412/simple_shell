@@ -61,7 +61,8 @@ void execute_unsetenv(shell_vars_t *vars);
 
 char **tokenize_input(char *input_buffer, char *delimit);
 char **custom_reallocate(char **point, size_t *size);
-char *custom_strtok(char *str, const char *delim);
+char *custom_strtok(char *str, const char *delimit);
+unsigned int hasMatch(char c, const char *str);
 
 void checkPath(shell_vars_t *vars);
 int executePath(char *command, shell_vars_t *vars);
