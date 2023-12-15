@@ -1,3 +1,4 @@
+#include "shell.h"
 /**
  * findPath - finds the PATH variable in the environment
  * @env: array of environment variables

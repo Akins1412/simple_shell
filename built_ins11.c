@@ -1,3 +1,4 @@
+#include "shell.h"
 /**
  * execute_setenv - Creates a new environment variable or edits an existing one
  * @vars: Pointer to the structure of shell variables
